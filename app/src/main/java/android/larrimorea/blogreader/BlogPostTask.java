@@ -22,7 +22,7 @@ public class BlogPostTask extends AsyncTask<Activity, Void, JSONObject> {
         JSONObject jsonObject = null;
 
         try {
-            URL blogFeedURL = new URL("http://www.reddit.com/r/AskReddit/?count=10");
+            URL blogFeedURL = new URL("https://www.reddit.com/r/AskReddit/.json");
 
             HttpURLConnection connection = (HttpURLConnection)blogFeedURL.openConnection();
             connection.connect();

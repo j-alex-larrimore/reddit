@@ -55,17 +55,17 @@ public class BlogPostParser {
 
     public void readFeed(JSONObject jsonObject){
         try {
-            JSONArray jsonPosts = jsonObject.getJSONArray("posts");
+            JSONArray jsonPosts = jsonObject.getJSONObject("data").getJSONArray("children");
 
             for(int index = 0; index < jsonPosts.length(); index++){
-                JSONObject post = jsonPosts.getJSONObject(index);
+                JSONObject post = jsonPosts.getJSONObject(index).getJSONObject("data");
 
                 String title = post.getString("title");
                 String url = post.getString("url");
-                String author = post.getString("author");
-                String id = post.getString("id");
-                String subreddit = post.getString("subreddit");
-                BlogPost blogPost = new BlogPost(title, url, author, id, subreddit);
+              //  String author = post.getString("author");
+               // String id = post.getString("id");
+                //String subreddit = post.getString("subreddit");
+                BlogPost blogPost = new BlogPost(title, url);
                 posts.add(blogPost);
             }
         }catch(JSONException error){
