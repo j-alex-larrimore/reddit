@@ -13,6 +13,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+//
+
 public class BlogPostTask extends AsyncTask<Activity, Void, JSONObject> {
     private Activity activity;
 
