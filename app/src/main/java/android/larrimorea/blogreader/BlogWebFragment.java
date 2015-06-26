@@ -11,24 +11,38 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 
+import java.net.URL;
+
 public class BlogWebFragment extends Fragment {
+    private static final String ARG_POST_ID = "post_id";
+
+    static View mView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_blog_web, container, false);
+        mView = inflater.inflate(R.layout.fragment_blog_web, container, false);
 
         Intent intent = getActivity().getIntent();
         Uri blogUri = intent.getData();
 
-        WebView webView = (WebView)v.findViewById(R.id.webView);
+        WebView webView = (WebView)mView.findViewById(R.id.webView);
         webView.loadUrl(blogUri.toString());
 
-        return v;
+        return mView;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    public static BlogWebFragment newInstance(String postUrl){
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_POST_ID, postUrl);
+
+        BlogWebFragment fragment = new BlogWebFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 }

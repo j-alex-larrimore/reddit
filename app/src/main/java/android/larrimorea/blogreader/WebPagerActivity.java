@@ -6,21 +6,57 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.webkit.WebView;
 
+import java.net.URL;
 import java.util.List;
 import java.util.UUID;
 
-public class WebPagerActivity extends SingleFragmentActivity {
+public class WebPagerActivity extends FragmentActivity {
     private ViewPager mViewPager;
     private List<BlogPost> mPosts;
 
+//    @Override
+//    protected Fragment createFragment() {
+//        return new BlogWebFragment();
+//    }
+
     @Override
-    protected Fragment createFragment() {
-        return new BlogWebFragment();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_blog_web);
+
+        Intent intent = this.getIntent();
+        Uri blogUri = intent.getData();
+
+        mViewPager = (ViewPager)findViewById(R.id.web_pager);
+
+        mPosts = BlogPostParser.get().getPosts();
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        mViewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
+            @Override
+            public Fragment getItem(int position) {
+                BlogPost post = mPosts.get(position);
+                return BlogWebFragment.newInstance(post.getUrl());
+            }
+
+            @Override
+            public int getCount() {
+                return mPosts.size();
+            }
+        });
+
+        for(int i = 0; i< mPosts.size(); i++){
+            if(mPosts.get(i).getUrl().equals(blogUri)){
+                mViewPager.setCurrentItem(i);
+                break;
+            }
+        }
     }
 
     public static Intent newIntent(Context packageContext, Uri blogUri){
@@ -29,6 +65,8 @@ public class WebPagerActivity extends SingleFragmentActivity {
         //intent.putExtra(EXTRA_CRIME_ID, blogUri);
         return intent;
     }
+
+
 
 //    public static Intent newIntent(Context packageContext, UUID crimeID){
 //        Intent intent = new Intent(packageContext, CrimePagerActivity.class);
