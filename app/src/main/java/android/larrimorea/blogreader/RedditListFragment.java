@@ -1,6 +1,8 @@
 package android.larrimorea.blogreader;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -60,7 +62,7 @@ public class RedditListFragment extends Fragment {
         mPostRecyclerView.setAdapter(mAdapter);
     }
 
-    public class PostHolder extends RecyclerView.ViewHolder{
+    public class PostHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView mTitleTextView;
 
         public PostHolder(View itemView){
@@ -69,7 +71,19 @@ public class RedditListFragment extends Fragment {
             mTitleTextView = (TextView)itemView;
         }
 
+        @Override
+        public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), BlogWebActivity.class);
+                //getAdapterPosition can be called in a viewHolder object to return that ViewHolder's position in the List.
+                int position = getAdapterPosition();
 
+
+                Uri blogUri = Uri.parse(BlogPostParser.get().posts.get(position).url);
+                intent.setData(blogUri);
+
+                startActivity(intent);
+
+        }
     }
 
     public class PostAdapter extends RecyclerView.Adapter<PostHolder>{
@@ -96,6 +110,8 @@ public class RedditListFragment extends Fragment {
         public int getItemCount() {
             return mPosts.size();
         }
+
+
     }
 
 //    @Nullable
