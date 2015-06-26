@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".BlogWebActivity"
+            android:name=".WebPagerActivity"
             android:label="@string/app_name">
 
         </activity>

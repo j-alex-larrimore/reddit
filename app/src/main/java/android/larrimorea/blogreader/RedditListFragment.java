@@ -73,13 +73,17 @@ public class RedditListFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), BlogWebActivity.class);
+                //Intent intent = new Intent(getActivity(), WebPagerActivity.class);
+
+
                 //getAdapterPosition can be called in a viewHolder object to return that ViewHolder's position in the List.
                 int position = getAdapterPosition();
 
 
                 Uri blogUri = Uri.parse(BlogPostParser.get().posts.get(position).url);
-                intent.setData(blogUri);
+                Intent intent = BlogActivity.newIntent(getActivity(), blogUri);
+
+                //intent.setData(blogUri);
 
                 startActivity(intent);
 
