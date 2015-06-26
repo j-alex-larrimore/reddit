@@ -14,23 +14,21 @@ import android.webkit.WebView;
 import java.util.List;
 import java.util.UUID;
 
-public class WebPagerActivity extends Activity {
+public class WebPagerActivity extends SingleFragmentActivity {
     private ViewPager mViewPager;
     private List<BlogPost> mPosts;
 
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_blog_web);
-        Intent intent = getIntent();
-        Uri blogUri = intent.getData();
-
-        WebView webView = (WebView)findViewById(R.id.webView);
-        webView.loadUrl(blogUri.toString());
+    protected Fragment createFragment() {
+        return new BlogWebFragment();
     }
 
-
+    public static Intent newIntent(Context packageContext, Uri blogUri){
+        Intent intent = new Intent(packageContext, WebPagerActivity.class);
+        intent.setData(blogUri);
+        //intent.putExtra(EXTRA_CRIME_ID, blogUri);
+        return intent;
+    }
 
 //    public static Intent newIntent(Context packageContext, UUID crimeID){
 //        Intent intent = new Intent(packageContext, CrimePagerActivity.class);

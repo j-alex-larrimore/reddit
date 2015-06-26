@@ -20,12 +20,7 @@ public class BlogActivity extends SingleFragmentActivity {
         return new RedditListFragment();
     }
 
-    public static Intent newIntent(Context packageContext, Uri blogUri){
-        Intent intent = new Intent(packageContext, WebPagerActivity.class);
-        intent.setData(blogUri);
-        //intent.putExtra(EXTRA_CRIME_ID, blogUri);
-        return intent;
-    }
+
 
 
 
