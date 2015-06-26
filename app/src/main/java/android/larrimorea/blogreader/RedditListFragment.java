@@ -67,7 +67,7 @@ public class RedditListFragment extends Fragment {
 
         public PostHolder(View itemView){
             super(itemView);
-
+            itemView.setOnClickListener(this);
             mTitleTextView = (TextView)itemView;
         }
 
