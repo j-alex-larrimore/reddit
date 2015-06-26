@@ -1,6 +1,7 @@
 package android.larrimorea.blogreader;
 
 
+import android.content.Context;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -27,6 +28,10 @@ public class BlogPostParser {
             parser = new BlogPostParser();
         }
         return parser;
+    }
+
+    public ArrayList<BlogPost> getPosts(){
+        return posts;
     }
 
     public JSONObject parse(InputStream inputStream){

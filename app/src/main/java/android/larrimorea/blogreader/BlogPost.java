@@ -15,4 +15,13 @@ public class BlogPost {
         //this.subreddit = subreddit;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+
 }
