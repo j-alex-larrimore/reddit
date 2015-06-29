@@ -17,6 +17,7 @@ public class BlogWebFragment extends Fragment {
     private static final String ARG_POST_ID = "post_id";
 
     static View mView;
+    private static Uri mUri;
 
     @Nullable
     @Override
@@ -25,9 +26,12 @@ public class BlogWebFragment extends Fragment {
 
         Intent intent = getActivity().getIntent();
         Uri blogUri = intent.getData();
-
-        WebView webView = (WebView)mView.findViewById(R.id.webView);
-        webView.loadUrl(blogUri.toString());
+        WebView webView = (WebView) mView.findViewById(R.id.webView);
+        if(blogUri!= null) {
+            webView.loadUrl(blogUri.toString());
+        }else{
+            webView.loadUrl(mUri.toString());
+        }
 
         return mView;
     }
@@ -38,6 +42,7 @@ public class BlogWebFragment extends Fragment {
     }
 
     public static BlogWebFragment newInstance(String postUrl){
+        mUri = Uri.parse(postUrl);
         Bundle args = new Bundle();
         args.putSerializable(ARG_POST_ID, postUrl);
 

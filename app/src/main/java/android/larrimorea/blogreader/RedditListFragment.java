@@ -31,6 +31,17 @@ public class RedditListFragment extends Fragment {
 
     private RecyclerView mPostRecyclerView;
     private PostAdapter mAdapter;
+    private Callbacks mCallbacks;
+
+    public interface Callbacks{
+        void onPostSelected(Uri postUri);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mCallbacks = (Callbacks) activity;
+    }
 
     @Nullable
     @Override
@@ -73,19 +84,17 @@ public class RedditListFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-                //Intent intent = new Intent(getActivity(), WebPagerActivity.class);
-
                 //getAdapterPosition can be called in a viewHolder object to return that ViewHolder's position in the List.
                 int position = getAdapterPosition();
 
 
                 Uri blogUri = Uri.parse(BlogPostParser.get().posts.get(position).url);
-                Intent intent = WebPagerActivity.newIntent(getActivity(), blogUri);
+            //Old code pre-Callbacks below
+               // Intent intent = WebPagerActivity.newIntent(getActivity(), blogUri);
+                //startActivity(intent);
 
-                //intent.setData(blogUri);
 
-                startActivity(intent);
-
+                mCallbacks.onPostSelected(blogUri);
         }
     }
 
@@ -116,20 +125,6 @@ public class RedditListFragment extends Fragment {
 
 
     }
-
-//    @Nullable
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        View v = inflater.inflate(R.layout.fragment_reddit_list, container, false);
-//
-////        Intent intent = getIntent();
-////        Uri blogUri = intent.getData();
-////
-////        WebView webView = (WebView)findViewById(R.id.webView);
-////        webView.loadUrl(blogUri.toString());
-//
-//        return v;
-//    }
 
     public class BlogPostTask extends AsyncTask<Activity, Void, JSONObject> {
         private Activity activity;
@@ -169,5 +164,11 @@ public class RedditListFragment extends Fragment {
             //RedditListFragment.PostAdapter adapter = new RedditListFragment.PostAdapter(BlogPostParser.get().posts);
             //listView.setAdapter(adapter);
         }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
     }
 }

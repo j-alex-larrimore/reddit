@@ -14,7 +14,7 @@ import android.widget.ProgressBar;
 
 import java.util.UUID;
 
-public class BlogActivity extends SingleFragmentActivity {
+public class BlogActivity extends SingleFragmentActivity implements RedditListFragment.Callbacks{
     @Override
     protected Fragment createFragment() {
         return new RedditListFragment();
@@ -22,11 +22,19 @@ public class BlogActivity extends SingleFragmentActivity {
 
     @Override
     protected int getLayoutResId() {
-        //return R.layout.activity_twopane;
         return R.layout.activity_masterdetail;
     }
 
-
-
+    @Override
+    public void onPostSelected(Uri postUri) {
+        if(findViewById(R.id.detail_fragment_container)==null){
+            Intent intent = WebPagerActivity.newIntent(this, postUri);
+            intent.setData(postUri);
+            startActivity(intent);
+        }else{
+            Fragment newDetail = BlogWebFragment.newInstance(postUri.toString());
+            getSupportFragmentManager().beginTransaction().replace(R.id.detail_fragment_container, newDetail).commit();
+        }
+    }
 }
 
