@@ -21,10 +21,6 @@ public class WebPagerActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private List<BlogPost> mPosts;
 
-//    @Override
-//    protected Fragment createFragment() {
-//        return new BlogWebFragment();
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

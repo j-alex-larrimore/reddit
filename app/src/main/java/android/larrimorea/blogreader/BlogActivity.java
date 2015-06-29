@@ -20,7 +20,10 @@ public class BlogActivity extends SingleFragmentActivity {
         return new RedditListFragment();
     }
 
-
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.activity_masterdetail;
+    }
 
 
 
